@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {addVehicle} from "../../Action/vehicleActions";
 import PropTypes from "prop-types";
@@ -7,11 +6,11 @@ import PropTypes from "prop-types";
 class VehicleItems extends Component {
         constructor(props){
           super(props);
-          const {id} = this.props.match.params
+          const {id} = this.props.match.params;
+          
       
           this.state = {
-          makeId: "",
-          vehicleId: "",
+          makeId: id,
           model: "",
           style: "",
           year: "",
@@ -25,11 +24,27 @@ class VehicleItems extends Component {
           leasePrice: null,
           quantity: null,
           carImage: null,
+          file: null,
+          imageName: "",
+          image_preview: '',
           errors: {}
           } 
             this.onChange = this.onChange.bind(this);
             this.onSubmit = this.onSubmit.bind(this)
     }
+
+    static getDerivedStateFromProps(nextProps, prevState){
+      if(nextProps.errors){
+          return {errors: nextProps.errors};
+      }
+      else return null;
+  }
+
+ componentDidUpdate(prevProps, prevState){
+      if(prevProps.error){
+          this.setState({errors: prevProps.errors});
+      }
+  }
 
   onChange(e){
         this.setState({
@@ -37,30 +52,51 @@ class VehicleItems extends Component {
         })
     }
 
+    handleImagePreview = (e) => {
+      let image_as_base64 = URL.createObjectURL(e.target.files[0])
+      this.setState({
+          image_preview: image_as_base64,
+          file : e.target.files[0],
+          imageName : e.target.files[0].name
+      })
+  }
+
     onSubmit(e){
         e.preventDefault();
-        const newModel = {
-            model:this.state.model,
-            style:this.state.style,
-            year:this.state.year,
-            trimLevel:this.state.trimLevel,
-            color:this.state.color,
-            odometer:this.state.odometer,
-            regNo: this.state.regNo,
-            carValue:this.state.carValue,
-            carImage:this.state.carImage
-        }
-        this.props.addVehicle(this.state.makeId, newModel, this.props.history)
+        let formData = new FormData()
+        formData.append('file', this.state.file);
+        formData.append('model', this.state.model,)
+        formData.append('style', this.state.style)
+        formData.append('style',this.state.style)
+        formData.append('year',this.state.year)
+        formData.append('trimLevel',this.state.trimLevel)
+        formData.append('color', this.state.color)
+        formData.append('odometer',this.state.odometer)
+        formData.append('regNo', this.state.regNo)
+        formData.append('carValue', this.state.carValue)
+        formData.append('carImage', this.state.carImage)
+        formData.append('imageName', this.state.imageName)
+        this.props.addVehicle(this.state.makeId, formData, this.props.history)
     }
 
 
     render() {
-
+      const {id} = this.props.match.params
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
   <div className="form-row">
-    <div className="form-group col-md-6">
+  <div className="form-group col-md-3">
+      <label>Make ID</label>
+      <input 
+      type="text" 
+      className="form-control" 
+      name="makeId"
+      value={this.state.makeId} 
+      disabled
+      />
+    </div>
+    <div className="form-group col-md-3">
       <label>Model</label>
       <input 
       type="text" 
@@ -69,7 +105,7 @@ class VehicleItems extends Component {
       value={this.state.model} 
       onChange={this.onChange}/>
     </div>
-    <div className="form-group col-md-6">
+    <div className="form-group col-md-3">
       <label>Style</label>
       <input 
       type="text" 
@@ -104,7 +140,11 @@ class VehicleItems extends Component {
   <div className="form-row">
     <div className="form-group col-md-6">
       <label>Color</label>
-      <input type="text" className="form-control" />
+      <input type="text" 
+      className="form-control"
+      name="color"
+      value={this.state.color}
+      onChange = {this.onChange}  />
     </div>
     <div className="form-group col-md-6">
       <label>Odometer</label>
@@ -139,16 +179,18 @@ class VehicleItems extends Component {
        />
     </div>
   </div>
+<img src={this.state.image_preview} alt="..."/>
+
   <div className="custom-file">
             <input 
             type="file" 
             className="custom-file-input" 
             id="customFile"
-            name="carImage"
+            name="file"
             value={this.state.carImage}
-            onChange = {this.onChange} 
+            onChange = {this.handleImagePreview} 
             />
-            <label className="custom-file-label" for="customFile">Choose file</label>
+            <label className="custom-file-label" for="customFile">{this.state.imageName}</label>
             </div>
   <button type="submit" className="btn btn-primary">Submit</button>
 </form>
@@ -161,4 +203,7 @@ addVehicle.propTypes = {
   addVehicle: PropTypes.func.isRequired
 }
 
-export default connect(null, {addVehicle})(VehicleItems)
+const mapStateToProps = state => ({
+  errors: state.errors
+})
+export default connect(mapStateToProps, {addVehicle})(VehicleItems)

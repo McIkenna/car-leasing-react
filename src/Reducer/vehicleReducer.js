@@ -1,14 +1,14 @@
-import {GET_VEHICLE, GET_VEHICLES, DELETE_VEHICLE, GET_CARMAKE} from "../Action/types"
+import {GET_VEHICLE, GET_VEHICLES, DELETE_VEHICLE, GET_MODEL} from "../Action/types"
 
 
 const initialState = {
-    vehicle: [],
-    vehicles: {}
+    vehicles: [],
+    vehicle: {}
 }
 
 export default function(state = initialState, action){
     switch(action.type){
-        case GET_CARMAKE:
+        case GET_MODEL:
             return {
                 ...state, 
                 vehicles: action.payload

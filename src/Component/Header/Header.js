@@ -25,9 +25,6 @@ class Header extends Component {
             <li className="nav-item">
             <CreateModel />
             </li>
-            <li className="nav-item">
-           <CreateVehicleButton />
-            </li>
             </ul>
         </div>
         </nav>

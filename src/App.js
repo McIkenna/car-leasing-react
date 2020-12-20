@@ -10,6 +10,7 @@ import VehicleItems from './Component/Vehicles/VehicleItems';
 import Vehicles from './Component/Vehicles/Vehicles';
 import {Provider} from "react-redux";
 import store from "./Store/store"
+import UpdateModel from './Component/Models/UpdateModel';
 function App() {
   return (
     <Provider store={store}>
@@ -18,9 +19,10 @@ function App() {
       <Header />
       
      <Route exact path="/Dashboard" component={Dashboard}/>
-     <Route exact path="/Vehicles" component={Vehicles}/>
-     <Route exact path="/VehicleItems" component={VehicleItems}/>
+     <Route exact path="/Vehicles/:id" component={Vehicles}/>
+     <Route exact path="/VehicleItems/:id" component={VehicleItems}/>
      <Route exact path="/ModelItem" component={ModelItem}/>
+     <Route exact path="/UpdateModel/:id" component={UpdateModel}/>
     </div>
     </Router>
     </Provider>

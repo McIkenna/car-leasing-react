@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types"
 import {connect} from "react-redux"
-import {createMake} from "../../Action/modelActions"
+import {createModel} from "../../Action/modelActions"
 class ModelItem extends Component {
 
     constructor(){
@@ -11,8 +11,8 @@ class ModelItem extends Component {
             make: "",
             carImageUrl : "",
             file: null,
+            fileName:"",
             image_preview: '',
-            imageName: "",
             errors: {}
         }
         this.onChange = this.onChange.bind(this);
@@ -51,7 +51,7 @@ class ModelItem extends Component {
         this.setState({
             image_preview: image_as_base64,
             file : e.target.files[0],
-            fileName : e.target.files[0]
+            fileName : e.target.files[0].name
     
         })
     }
@@ -60,8 +60,9 @@ class ModelItem extends Component {
         e.preventDefault();
         const formData = new FormData();
         formData.append('file', this.state.file);
-        formData.append('make', this.state.make)
-      this.props.createMake(formData, this.props.history)
+        formData.append('make', this.state.make);
+        formData.append('filename', this.state.fileName)
+      this.props.createModel(formData, this.props.history)
     }
 
 
@@ -71,7 +72,7 @@ class ModelItem extends Component {
                 <form onSubmit={this.onSubmit}>
                     <div><h1>Car Model Input</h1></div>
 
-                <img src={this.state.image_preview} alt="image preview"/>
+                <img src={this.state.image_preview} alt="..."/>
             <div className="form-group">
                 <label for="inputAddress">Make</label>
                 <input 
@@ -92,7 +93,7 @@ class ModelItem extends Component {
             value = {this.state.carImageUrl}
             onChange={this.handleImagePreview}
             />
-            <label className="custom-file-label" for="customFile">Image here</label>
+            <label className="custom-file-label" for="customFile">{this.state.fileName}</label>
             </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
@@ -101,12 +102,12 @@ class ModelItem extends Component {
     }
 }
 
-createMake.propTypes = {
-    createMake: PropTypes.func.isRequired,
+createModel.propTypes = {
+    createModel: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     errors: state.errors
 })
-export default connect(mapStateToProps, {createMake})(ModelItem) 
+export default connect(mapStateToProps, {createModel})(ModelItem) 

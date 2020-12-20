@@ -1,45 +1,38 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {addVehicle} from "../../Action/vehicleActions";
 import PropTypes from "prop-types";
+import {getVehicles} from "../../Action/vehicleActions"
+import VehicleModel from './VehicleModel';
+
 
 class Vehicles extends Component {
 
+  componentDidMount(){
+    const {id} = this.props.match.params;
+    this.props.getVehicles(id)
+  }
  
     render() {
+     // const {id} = this.props.match.params;
+      const {vehicles} = this.props.vehicle;
+    
         return (
             <div>
-                <div className="card-group">
-  <div className="card">
-    <img src="..." className="card-img-top" alt="..."/>
-    <div className="card-body">
-      <h5 className="card-title">Card title</h5>
-      <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-  <div className="card">
-    <img src="..." className="card-img-top" alt="..."/>
-    <div className="card-body">
-      <h5 className="card-title">Card title</h5>
-      <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-  <div className="card">
-    <img src="..." className="card-img-top" alt="..."/>
-    <div className="card-body">
-      <h5 className="card-title">Card title</h5>
-      <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-      <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-</div>
+              {vehicles.map(vehicle => (
+                <VehicleModel key={vehicle.makeId} vehicle={vehicle} />
+              ))}
             </div>
         )
     }
 }
 
+Vehicles.propTypes = {
+  vehicle: PropTypes.object.isRequired,
+  getVehicles: PropTypes.func.isRequired
+}
+const mapStateToProps = state => ({
+  vehicle:state.vehicle
+})
 
 
-export default connect(null)(Vehicles)
+export default connect(mapStateToProps, {getVehicles})(Vehicles)

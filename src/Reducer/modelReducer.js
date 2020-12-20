@@ -1,25 +1,26 @@
-import {GET_CARMAKE, GET_CARMAKES, DELETE_CARMAKE} from "../Action/types"
+import {GET_MODEL, GET_MODELS, DELETE_MODEL} from "../Action/types"
 
 const initialState = {
-    model: [],
-    models: {}
+    models: [],
+    model: {}
 }
 
 export default function(state = initialState, action){
     switch(action.type){
-        case GET_CARMAKE:
+        case GET_MODEL:
             return {
                 ...state, 
                 model: action.payload
             }
-        case GET_CARMAKES:
+        case GET_MODELS:
             return {
                 ...state,
                 models: action.payload
             }
-        case DELETE_CARMAKE:
+        case DELETE_MODEL:
             return {
-                ...state
+                ...state,
+                models: state.models.filter(model=>model.makeId !== action.payload)
             }
             default:
                 return state;
