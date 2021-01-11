@@ -1,0 +1,12 @@
+.error_feedback {
+  color: red;
+}
+
+.summary {
+  font-size: large;
+  align-items: center;
+}
+
+.summary li {
+  text-decoration: none;
+}

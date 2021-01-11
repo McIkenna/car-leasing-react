@@ -3,7 +3,7 @@ import {GET_VEHICLE, GET_VEHICLES, DELETE_VEHICLE, GET_MODEL} from "../Action/ty
 
 const initialState = {
     vehicles: [],
-    vehicle: {}
+    vehicle: {},
 }
 
 export default function(state = initialState, action){
@@ -11,21 +11,25 @@ export default function(state = initialState, action){
         case GET_MODEL:
             return {
                 ...state, 
-                vehicles: action.payload
+                vehicles: action.payload,
+         
             }
         case GET_VEHICLE:
             return {
                 ...state,
-                vehicle: action.payload
+                vehicle: action.payload,
+             
             }
         case GET_VEHICLES:
                 return {
                     ...state,
-                    vehicles: action.payload
+                    vehicles: action.payload,
+                
                 }
         case DELETE_VEHICLE:
             return {
-                ...state
+                ...state,
+                vehicles: state.vehicles.filter(vehicle => vehicle.vehicleId !== action.payload)
             }
             default:
                 return state;

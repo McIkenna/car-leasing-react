@@ -36,7 +36,6 @@ export const getModel = (makeId, history) => async dispatch => {
     } catch (error) {
         history.push("/dashboard");
     }
-    
 }
 
 export const updateModel = (carModel, history) => async dispatch => {
@@ -56,9 +55,11 @@ export const updateModel = (carModel, history) => async dispatch => {
 };
 
 export const deleteModel = id => async dispatch => {
+    if(window.confirm(`You are deleting this model`)){
     await axios.delete(`http://localhost:8000/api/carMake/${id}`)
     dispatch({
         type: DELETE_MODEL,
         payload: id
     })
+}
 }

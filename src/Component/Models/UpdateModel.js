@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {getModel,updateModel} from "../../Action/modelActions"
+import {Link} from "react-router-dom"
 import PropTypes from "prop-types"
 import {connect} from "react-redux"
 
@@ -76,7 +77,6 @@ componentWillReceiveProps(nextProps){
         updatedFormData.append('file', this.state.file);
         updatedFormData.append('makeId', this.state.makeId);
         updatedFormData.append('make', this.state.make);
-        updatedFormData.append('filename', this.state.fileName)
       this.props.updateModel(updatedFormData, this.props.history)
     }
     render() {
@@ -84,6 +84,7 @@ componentWillReceiveProps(nextProps){
         return (
             <div>
                 <div>
+                <Link to={`/dashboard`} type="button" class="btn btn-outline-dark">Go Back</Link>
                 <form onSubmit={this.onSubmit}>
                     <div><h1>Update Model</h1></div>
                 <img src={this.state.carImageUrl} alt="..."/>
@@ -109,7 +110,6 @@ componentWillReceiveProps(nextProps){
             onChange={this.handleImagePreview}
             />
             <label className="custom-file-label" for="customFile">{this.state.fileName}</label>
-         
             </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
                 </form>

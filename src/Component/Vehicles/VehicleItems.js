@@ -67,7 +67,6 @@ class VehicleItems extends Component {
         formData.append('file', this.state.file);
         formData.append('model', this.state.model,)
         formData.append('style', this.state.style)
-        formData.append('style',this.state.style)
         formData.append('year',this.state.year)
         formData.append('trimLevel',this.state.trimLevel)
         formData.append('color', this.state.color)
@@ -81,12 +80,11 @@ class VehicleItems extends Component {
 
 
     render() {
-      const {id} = this.props.match.params
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
-  <div className="form-row">
-  <div className="form-group col-md-3">
+                  <div className="form-row">
+                  <div className="form-group col-md-3">
       <label>Make ID</label>
       <input 
       type="text" 
@@ -104,16 +102,19 @@ class VehicleItems extends Component {
       name="model"
       value={this.state.model} 
       onChange={this.onChange}/>
+      
     </div>
     <div className="form-group col-md-3">
       <label>Style</label>
-      <input 
-      type="text" 
+      <select type="text" 
       className="form-control"
-      name="style"
-      value={this.state.style}
-      onChange={this.onChange}
-      />
+      name="style" onChange={this.onChange} value={this.state.style}>
+      <option value=""></option>
+      <option value="SUV">SUV</option>
+      <option value="BUS">BUS</option>
+      <option value="VAN">VAN</option>
+      <option value="TRUCK">TRUCK</option>
+    </select>
     </div>
   </div>
 
@@ -192,7 +193,7 @@ class VehicleItems extends Component {
             />
             <label className="custom-file-label" for="customFile">{this.state.imageName}</label>
             </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary">Submit</button>
 </form>
             </div>
         )
@@ -200,7 +201,8 @@ class VehicleItems extends Component {
 }
 
 addVehicle.propTypes = {
-  addVehicle: PropTypes.func.isRequired
+  addVehicle: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

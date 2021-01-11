@@ -1,0 +1,7 @@
+.model {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 0 10%;
+
+  border-top: 0.3125rem solid #1c2127;
+}
