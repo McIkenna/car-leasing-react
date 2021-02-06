@@ -4,7 +4,7 @@ import {GET_CUSTOMER, GET_ERRORS, GET_CUSTOMERS, DELETE_CUSTOMER} from "./types"
 
 export const addCustomer = (customer, history) => async dispatch => {
     try {
-      const res =   await axios.post("http://localhost:8000/api/customer", customer)
+      const res =   await axios.post("http://localhost:8000/api/saveCustomer", customer)
         history.push(`/dashboard`);
         dispatch({
             type: GET_ERRORS,

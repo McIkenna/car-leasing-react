@@ -11,15 +11,27 @@ import axios from 'axios'
     super();
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      errors: {}
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this)
   }
   
+
+componentDidMount(){
+  if(this.props.security.validToken){
+    this.props.history.push("/dashboard");
+  }
+}
+
 componentWillReceiveProps(nextProps){
+
   if(nextProps.security.validToken){
     this.props.history.push("/");
+  }
+  if(nextProps.errors){
+    this.setState({errors: nextProps.errors})
   }
 }
 
@@ -39,6 +51,7 @@ componentWillReceiveProps(nextProps){
       
     }
     render() {
+     
         return (
         <div>
       <form className="row g-3" onSubmit={this.onSubmit}>
@@ -74,7 +87,8 @@ componentWillReceiveProps(nextProps){
 }
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

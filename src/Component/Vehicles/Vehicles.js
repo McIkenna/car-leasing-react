@@ -45,8 +45,10 @@ componentDidUpdate(prevProps, prevState){
       const {vehicles} = this.props.vehicle;
       const {errors} = this.state;
       const {loading} = this.state;
-     
+   
       let vehicleBoard;
+
+     
 
       const boardAlgorithm = (errors, vehicles) => {
         if(vehicles.length < 1){
@@ -91,11 +93,13 @@ Vehicles.propTypes = {
   vehicle: PropTypes.object.isRequired,
   getVehicles: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired
 
 }
 const mapStateToProps = state => ({
   vehicle:state.vehicle,
-  errors: state.errors
+  errors: state.errors,
+
 })
 
 

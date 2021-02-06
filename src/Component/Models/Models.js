@@ -15,8 +15,24 @@ import styles from "./Models.module.css"
  
     render() {
         let {model} = this.props;
-        const {makeId} = this.props.model
+        const {makeId} = this.props.model;
+        const {validToken, user} = this.props.security;
     
+        const userIsAuthenticated =(
+          <div className={styles.news_card__details_wrapper}>
+          <Link to={`/UpdateModel/${model.makeId}`} className={styles.news_card__read_more}>Update</Link>
+          <Link to={`/VehicleItems/${model.makeId}`}   className={styles.news_card__read_more}>Create New Models</Link>
+          <li type="button" className={styles.news_card__read_more} onClick={this.onDeleteModel.bind(this, model.makeId)}>Delete</li>
+          </div>
+        )
+
+      let modelControllers;
+        if(validToken && user){
+          modelControllers = userIsAuthenticated
+        }else{
+          modelControllers = null;
+        }
+  
   return (
   <div>
  <div className={styles.content_wrapper}>
@@ -27,9 +43,7 @@ import styles from "./Models.module.css"
       <h1 className={styles.news_card__title}>{model.make}</h1>
       <div className={styles.news_card__details_wrapper}>
         <Link to={`/Vehicles/${model.makeId}`} className={styles.news_card__read_more}>View</Link>
-        <Link to={`/UpdateModel/${model.makeId}`} className={styles.news_card__read_more}>Update</Link>
-        <Link to={`/VehicleItems/${model.makeId}`}   className={styles.news_card__read_more}>Create New Models</Link>
-        <li type="button" className={styles.news_card__read_more} onClick={this.onDeleteModel.bind(this, model.makeId)}>Delete</li>
+        {modelControllers}
         </div>
       </div>
     </div>
@@ -41,7 +55,11 @@ import styles from "./Models.module.css"
 
 Models.propTypes={
   deleteModel: PropTypes.func.isRequired,
-
+  security: PropTypes.object.isRequired
 }
 
-export default connect(null, {deleteModel})(Models)
+const mapStateToProps =state=>({
+  security: state.security
+})
+
+export default connect(mapStateToProps, {deleteModel})(Models)

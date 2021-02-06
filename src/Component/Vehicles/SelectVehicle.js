@@ -159,7 +159,8 @@ myFunction() {
 
     render() {
 
-        const {errors} = this.state
+        const {errors} = this.state;
+        const { validToken, user } = this.props.security;
         return (
             
     <div>
@@ -203,8 +204,7 @@ myFunction() {
     value={this.state.firstName} 
     onChange={this.onChange} 
     placeholder=""
-    
-    />
+     />
   
   </div>
 
@@ -308,6 +308,7 @@ SelectVehicle.propTypes = {
 const mapStateToProps = state => ({
     vehicle: state.vehicle.vehicle,
     order: state.order,
-    errors: state.errors
+    errors: state.errors,
+    security: state.security
 })
 export default connect(mapStateToProps, {getVehicle, addOrder})(SelectVehicle) 

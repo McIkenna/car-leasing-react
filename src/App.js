@@ -18,6 +18,8 @@ import Register from './Component/Authenticate/Register';
 import jwt_decode from "jwt-decode"
 import setJwtToken from "./securityUtils/setJwtToken"
 import { SET_CURRENT_USER } from './Action/types';
+import {logout} from "./Action/securityActions"
+import SecuredRoute from "./securityUtils/SecureRoute"
 
 
 const jwtToken = localStorage.jwtToken
@@ -30,10 +32,12 @@ if(jwtToken){
     payload: decode_jwtToken
   });
 
-  const currentTime = Date.now()/1000;
+ const currentTime = Date.now()/1000;
   if(decode_jwtToken.exp < currentTime){
     //handle logout
-   // window.location.href = "/"
+    store.dispatch(logout())
+    window.location.href = "/";
+   
   }
 }
 
@@ -48,19 +52,17 @@ function App() {
       }
      <Route exact path="/" component={Dashboard}/>
      <Route exact path="/Register" component={Register}/>
+     <Route exact path="/Login" component={Login}/>
+     <Route exact path="/Vehicles/:id" component={Vehicles}/>
+     <Route exact path="/Vehicles/:makeId/:vehicleId" component={SelectVehicle}/>
       {
         //private
       }
       <Switch>
-      <Route exact path="/Login" component={Login}/>
-
-    
-     <Route exact path="/Vehicles/:id" component={Vehicles}/>
-     <Route exact path="/VehicleItems/:id" component={VehicleItems}/>
-     <Route exact path="/ModelItem" component={ModelItem}/>
-     <Route exact path="/UpdateModel/:id" component={UpdateModel}/>
-     <Route exact path="/UpdateVehicle/:makeId/:vehicleId" component={UpdateVehicle}/>
-     <Route exact path="/Vehicles/:makeId/:vehicleId" component={SelectVehicle}/>
+     <SecuredRoute exact path="/VehicleItems/:id" component={VehicleItems}/>
+     <SecuredRoute exact path="/ModelItem" component={ModelItem}/>
+     <SecuredRoute exact path="/UpdateModel/:id" component={UpdateModel}/>
+     <SecuredRoute exact path="/UpdateVehicle/:makeId/:vehicleId" component={UpdateVehicle}/>
      </Switch>
     </div>
     </Router>
