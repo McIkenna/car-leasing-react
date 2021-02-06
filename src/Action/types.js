@@ -15,3 +15,10 @@ export const GET_ORDERS = "GET_ORDERS";
 export const GET_ORDER = "GET_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 
+//
+export const GET_CUSTOMERS= "GET_CUSTOMERS";
+export const GET_CUSTOMER = "GET_CUSTOMER";
+export const DELETE_CUSTOMER = "DELETE_CUSTOMER";
+
+//
+export const SET_CURRENT_USER = "SET_CURRENT_USER";

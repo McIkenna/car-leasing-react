@@ -37,7 +37,7 @@ const LeaseCal = (props) => {
     const CalLeasePlan = (style, plan, quantity, period, creditScore, carValue) => {
         const carWorth = calcValue(style, carValue);
         leasePrice = carWorth / 60;
-        if (creditScore >= 500 && period > 0 && quantity > 0 && plan != null) {
+        if (creditScore >= 500 && creditScore <= 800 && period > 0 && quantity > 0 && plan != null) {
             if (plan === "Monthly") {
                 leasePrice *= period * quantity;
             } else if (plan === "Weekly") {
@@ -61,14 +61,21 @@ const LeaseCal = (props) => {
                 </div>
             );
         }
-        else if(period < 0 || period == null){
+        else if(creditScore > 800){
+            return (
+                <div className={classes.error_feedback}>
+                    Your Credit Score is invalid
+                </div>
+            );
+        }
+        else if(period <= 0 || period == null){
             return (
                 <div className={classes.error_feedback}>
                     Enter A valid Period
                 </div>
             );
         }
-        else if(quantity < 0 || quantity == null){
+        else if(quantity <= 0 || quantity == null){
             return (
                 <div className={classes.error_feedback}>
                     The quantity entered is invalid

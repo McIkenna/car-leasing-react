@@ -13,13 +13,16 @@ class Header extends Component {
         <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
             <li className="nav-item active">
-                <Link className="nav-link" to="/Dashboard">Home <span className="sr-only">(current)</span></Link>
+                <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
             </li>
             <li className="nav-item">
                 <Link className="nav-link" to="/Vehicles">Features</Link>
             </li>
             <li className="nav-item">
                 <Link className="nav-link" to="#">Pricing</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/Login">Login</Link>
             </li>
             <li className="nav-item">
             <CreateModel />

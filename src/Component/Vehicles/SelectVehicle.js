@@ -22,7 +22,8 @@ class SelectVehicle extends Component {
         leasePrice: null,
         SSN: null, 
         errors: {},
-        viewAble:false
+        viewAble:false,
+        isError: false,
         } 
           this.onChange = this.onChange.bind(this);
           this.onSubmit = this.onSubmit.bind(this)
@@ -95,8 +96,7 @@ class SelectVehicle extends Component {
 
 onChange(e){
       this.setState({
-          [e.target.name] : e.target.value
-
+          [e.target.name] : e.target.value,
       })
   }
 /*
@@ -115,8 +115,9 @@ onViewPrice=(e)=>{
 }
 
 closeViewPrice=(e)=>{
-    e.preventDefault();
-    this.setState({viewAble:false})
+    this.setState(
+      {viewAble:false}
+      )
 }
 
 checkValidality(value, rules){
@@ -133,6 +134,7 @@ myFunction() {
 }
 */
   onSubmit(e){
+
      e.preventDefault();
      const newForm = {
         'style': this.state.style,
@@ -148,9 +150,6 @@ myFunction() {
         'period': this.state.period,
         'plan' : this.state.plan,
         'quantity' : this.state.quantity,
-        'firstName': this.state.firstName,
-        'lastName': this.state.lastName,
-        'address': this.state.address, 
         'creditScore': this.state.creditScore
        
      }

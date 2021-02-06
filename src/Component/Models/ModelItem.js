@@ -79,7 +79,7 @@ class ModelItem extends Component {
                 type="text" 
                 className="form-control" 
                 id="inputAddress" 
-                placeholder="make"
+                placeholder="e.g Toyota,Honda,Ford..."
                 name="make"
                 value={this.state.make}
                 onChange={this.onChange}
