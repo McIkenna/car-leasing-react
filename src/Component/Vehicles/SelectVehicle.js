@@ -6,27 +6,60 @@ import PropTypes from "prop-types"
 import classes from "./Vehicles.module.css"
 import  Modal  from "../UI/Modal/Modal"
 import LeaseCal from '../Orders/LeaseCal'
+import validator from 'react-validation';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+
+
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(value => {
+    value.trim().length > 0 && (valid = false);
+  });
+  // validate the form was filled out
+  Object.values(rest).forEach(value => {
+    value === null && (valid = false);
+  });
+
+  return valid;
+};
+
+
+const numRegex = RegExp(
+  /^[0-9\b]+$/
+);
 
 class SelectVehicle extends Component {
 
-    constructor(){
-        super();       
+    constructor(props){
+        super(props);       
         this.state = {
-        firstName: "",
-        lastName: "",
-        address:"", 
+        firstName:null,
+        lastName: null,
+        address:null, 
         creditScore: null, 
         period: null,
-        plan: "",
+        plan: null,
         quantity: null,
         leasePrice: null,
         SSN: null, 
-        errors: {},
+        formErrors: {
+          firstName: "",
+          lastName: "",
+          address:"", 
+          creditScore: "", 
+          period: "",
+          plan: "",
+          quantity: "",
+        },
         viewAble:false,
-        isError: false,
+        isError: true,
         } 
           this.onChange = this.onChange.bind(this);
-          this.onSubmit = this.onSubmit.bind(this)
+          this.onSubmit = this.onSubmit.bind(this);
+      
   }
 
   componentWillReceiveProps(nextProps){
@@ -94,10 +127,69 @@ class SelectVehicle extends Component {
       this.props.getVehicle(makeId, vehicleId, this.props.history)
   }
 
+
+ 
+
+
 onChange(e){
-      this.setState({
-          [e.target.name] : e.target.value,
-      })
+  e.preventDefault();
+  const { name, value } = e.target;
+  //let formErrors = { ...this.state.formErrors }
+  const {formErrors} = this.state;
+
+  for(let i=0; i<name.length; i++){
+    if(value.length > 0){
+      this.setState({isError: false});
+     console.log(name)
+    } 
+  }
+  
+   
+  
+  
+  
+  switch (name) {
+    case "firstName":
+      formErrors.firstName =
+        value.trim().length < 3 ? "minimum 3 characaters required" : "";
+      break;
+    case "lastName":
+      formErrors.lastName =
+      value.trim().length < 3 ? "minimum 3 characaters required" : "";
+     
+      break;
+      case "address":
+      formErrors.address =
+      value.trim().length < 10 ? "minimum 3 characaters required" : "";
+      break;
+      case "creditScore":
+        formErrors.creditScore = numRegex.test(value) && value.trim().length == 3 && value > 500
+        ? ""
+        : "invalid credit Score";
+      break;
+      case "period":
+        formErrors.period = numRegex.test(value) && value <=30
+        ? ""
+        : "invalid period";
+        break;
+      case "quantity":
+        formErrors.quantity = numRegex.test(value) && value <=10
+        ? ""
+        : "must be a number";
+      break;
+
+      case "plan":
+        formErrors.plan = value.trim().length == 0 ? "select a plan" : "";
+      break;
+      default:
+        break;
+    }
+
+    /*  this.setState({
+          [e.target.name] : e.target.value
+      })*/
+
+      this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   }
 /*
   handleImagePreview = (e) => {
@@ -109,9 +201,11 @@ onChange(e){
     })
 }*/
 
+
 onViewPrice=(e)=>{
-    e.preventDefault();
-    this.setState({viewAble:true})
+  e.preventDefault();
+      this.setState({viewAble:true})
+    
 }
 
 closeViewPrice=(e)=>{
@@ -119,7 +213,7 @@ closeViewPrice=(e)=>{
       {viewAble:false}
       )
 }
-
+/*
 checkValidality(value, rules){
 let isValid = false;
   if(rules.required){
@@ -128,14 +222,12 @@ let isValid = false;
 
   return isValid;
 }
-/*
-myFunction() {
-    document.getElementById("frm_category").submit();
-}
 */
+
   onSubmit(e){
 
      e.preventDefault();
+     if (formValid(this.state)) {
      const newForm = {
         'style': this.state.style,
         'trimLevel': this.state.trimLevel,
@@ -154,13 +246,16 @@ myFunction() {
        
      }
      this.props.addOrder(this.state.makeId, this.state.vehicleId, newForm, this.props.history)
-         
+    }else {
+      window.alert("Invalid Form")
+    }
   }
 
     render() {
 
-        const {errors} = this.state;
-        const { validToken, user } = this.props.security;
+      const { formErrors } = this.state;
+      const isEnabled = !formValid(this.state) || this.state.isError;
+      
         return (
             
     <div>
@@ -197,61 +292,73 @@ myFunction() {
   <form onSubmit={this.onSubmit}  id="vehicle_form">
   <div className={classes.floating_wrapper}>
   <div className={classes.floating_label}>
-  <label>First-Name</label>
-    <input className={classes.floating_input} 
+  <label>First-Name*</label>
+    <input  className={formErrors.firstName.length > 0 ? classes.floating_input_error : classes.floating_input} 
+    
     type="text"  
     name="firstName"
-    value={this.state.firstName} 
+   value={this.state.firstName} 
     onChange={this.onChange} 
-    placeholder=""
-     />
+    placeholder="Firstname"
+     />{formErrors.firstName.length > 0 && (
+      <span className={classes.errorMessage}>{formErrors.firstName}</span>
+    )}
   
   </div>
 
   <div className={classes.floating_label}>
-  <label>Last-Name</label>
+  <label>Last-Name*</label>
     <input 
-    className={classes.floating_input} 
+    className={formErrors.lastName.length > 0 ? classes.floating_input_error : classes.floating_input} 
     type="text"
     name="lastName"
     value={this.state.lastName} 
     onChange={this.onChange}  
-    placeholder=""/>
-    <span className={classes.input_highlight}></span>
-   
+    placeholder="Lastname"
+    />
+     {formErrors.lastName.length > 0 && (
+                <span className={classes.errorMessage}>{formErrors.lastName}</span>
+              )}
+    
   </div>
 
   <div className={classes.floating_label}>
-  <label>Address</label>
-    <input className={classes.floating_input} 
+  <label>Address*</label>
+    <input className={formErrors.address.length > 0 ? classes.floating_input_error : classes.floating_input} 
     type="text" 
     name="address"
     value={this.state.address} 
     onChange={this.onChange}   
-    placeholder=""/>
+    placeholder="Address"/>
     <span className={classes.input_highlight}></span>
+    {formErrors.address.length > 0 && (
+                <span className={classes.errorMessage}>{formErrors.address}</span>
+              )}
 
   </div>
 
   <div className={classes.floating_label}>
-  <label>Credit Score</label>
-    <input className={classes.floating_input} 
+  <label>Credit Score*</label>
+    <input className={formErrors.creditScore.length > 0 ? classes.floating_input_error : classes.floating_input}  
     type="text" 
     name="creditScore"
     value={this.state.creditScore} 
     onChange={this.onChange}   
-    placeholder=""/>
-    <span className={classes.input_highlight}></span>
+    placeholder="Credit Score"/>
+     {formErrors.creditScore.length > 0 && (
+                <span className={classes.errorMessage}>{formErrors.creditScore}</span>
+              )}
  
   </div>
 
 <div className={classes.floating_label}>
     <span className={classes.input_highlight}></span>
     <div className={classes.floating_label}>
-    <label>Plan</label>
+    <label>Plan*</label>
     <select className={classes.floating_select} 
     name="plan"
     value={this.state.plan} 
+    placeholder="Choose a plan period"
     onChange={this.onChange}   >
       <option value=""></option>
       <option value="Hourly">Hourly</option>
@@ -259,34 +366,44 @@ myFunction() {
       <option value="Weekly">Weekly</option>
       <option value="Monthly">Monthly</option>
     </select>
-    <span className={classes.input_highlight}></span>
+    {formErrors.plan.length > 0 && (
+                <span className={classes.errorMessage}>{formErrors.plan}</span>
+              )}
+ 
     
   </div>
 </div>
 
 <div className={classes.floating_label}>
-<label>Period</label>
-    <input className={classes.floating_input} 
+<label>Period*</label>
+    <input className={formErrors.period.length > 0 ? classes.floating_input_error : classes.floating_input} 
     type="text" 
     name="period"
     value={this.state.period} 
     onChange={this.onChange}    
-    placeholder=""/>
-    <span className={classes.input_highlight}></span>
+    placeholder="Period"/>
+   {formErrors.period.length > 0 && (
+                <span className={classes.errorMessage}>{formErrors.period}</span>
+              )}
+ 
 
   </div>
 
 <div className={classes.floating_label}>
-<label>Quantity</label>
-    <input className={classes.floating_input} 
+<label>Quantity*</label>
+    <input className={formErrors.quantity.length > 0 ? classes.floating_input_error : classes.floating_input} 
     type="text"
     name="quantity"
     value={this.state.quantity} 
     onChange={this.onChange}  
-    placeholder=""/>
-    <span className={classes.input_highlight}></span>
+    placeholder="Quantity"
+    />
+    {formErrors.quantity.length > 0 && (
+                <span className={classes.errorMessage}>{formErrors.quantity}</span>
+              )}
+ 
   </div>
-  <button onClick={this.onViewPrice}  className="btn btn-primary">Proceed</button>
+  <button onClick={this.onViewPrice}  className="btn btn-primary" disabled={isEnabled}>Proceed</button>
   </div>
   </form>
 </div>
@@ -302,13 +419,11 @@ SelectVehicle.propTypes = {
     addOrder: PropTypes.func.isRequired,
     getVehicle: PropTypes.func.isRequired,
     vehicle: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    
 }
 
 const mapStateToProps = state => ({
     vehicle: state.vehicle.vehicle,
-    order: state.order,
-    errors: state.errors,
-    security: state.security
+    order: state.order   
 })
 export default connect(mapStateToProps, {getVehicle, addOrder})(SelectVehicle) 

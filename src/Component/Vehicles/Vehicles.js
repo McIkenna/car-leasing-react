@@ -93,7 +93,6 @@ Vehicles.propTypes = {
   vehicle: PropTypes.object.isRequired,
   getVehicles: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired
 
 }
 const mapStateToProps = state => ({

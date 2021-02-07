@@ -20,5 +20,3 @@ export const GET_CUSTOMERS= "GET_CUSTOMERS";
 export const GET_CUSTOMER = "GET_CUSTOMER";
 export const DELETE_CUSTOMER = "DELETE_CUSTOMER";
 
-//
-export const SET_CURRENT_USER = "SET_CURRENT_USER";

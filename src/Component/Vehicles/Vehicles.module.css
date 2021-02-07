@@ -328,6 +328,24 @@ a {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.floating_input_error,
+.floating_select_error {
+  display: block;
+  font-size: 12px;
+  width: 100%;
+  height: 30px;
+  padding: 4px 4px;
+  background-color: transparent;
+  border: 1px solid red;
+  border-radius: 4px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.75em;
+  display: relative;
+}
+
 .floating_input:focus,
 .floating_select:focus {
   outline: none;

@@ -84,7 +84,7 @@ componentWillReceiveProps(nextProps){
         return (
             <div>
                 <div>
-                <Link to={`/dashboard`} type="button" class="btn btn-outline-dark">Go Back</Link>
+                <Link to={`/`} type="button" class="btn btn-outline-dark">Go Back</Link>
                 <form onSubmit={this.onSubmit}>
                     <div><h1>Update Model</h1></div>
                 <img src={this.state.carImageUrl} alt="..."/>

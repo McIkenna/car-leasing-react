@@ -12,24 +12,6 @@ class VehicleModel extends Component {
   }
   render() {
     const { vehicle } = this.props;
-    const { validToken, user } = this.props.security;
-
-    const userIsAuthenticated = (
-      <div className={classes.dots}>
-
-        <span><Link to={`/UpdateVehicle/${vehicle.makeId}/${vehicle.vehicleId}`} type="button" className="btn btn-outline-secondary">Update</Link></span>
-        <span><button type="button" className="btn btn-outline-danger"
-          onClick={this.onDeleteClick.bind(this, vehicle.makeId, vehicle.vehicleId)}
-        >Delete</button></span>
-      </div>
-    )
-
-    let vehicleControllers;
-    if (validToken && user) {
-      vehicleControllers = userIsAuthenticated
-    } else {
-      vehicleControllers = null;
-    }
 
     return (
       <div>
@@ -67,8 +49,10 @@ class VehicleModel extends Component {
                   </table>
                 </p>
                 <div className={classes.dots}>
-                  <span><Link to={`/Vehicles/${vehicle.makeId}/${vehicle.vehicleId}`} type="button" className="btn btn-outline-primary">View</Link></span>
-                  <span>{vehicleControllers}</span>
+                  <span><Link to={`/Vehicles/${vehicle.makeId}/${vehicle.vehicleId}`} type="button" className="btn btn-outline-primary">View</Link></span>   
+        <span><Link to={`/UpdateVehicle/${vehicle.makeId}/${vehicle.vehicleId}`} type="button" className="btn btn-outline-secondary">Update</Link></span>
+        <span><button type="button" className="btn btn-outline-danger"onClick={this.onDeleteClick.bind(this, vehicle.makeId, vehicle.vehicleId)}>Delete</button></span>
+     
                 </div>
               </div>
             </div>
@@ -81,11 +65,7 @@ class VehicleModel extends Component {
 }
 
 VehicleModel.propTypes = {
-  deleteVehicle: PropTypes.func.isRequired,
-  security: PropTypes.object.isRequired
+  deleteVehicle: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-  security: state.security
-})
-export default connect(mapStateToProps, { deleteVehicle })(VehicleModel)
+export default connect(null, { deleteVehicle })(VehicleModel)
