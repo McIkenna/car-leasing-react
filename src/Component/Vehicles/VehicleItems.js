@@ -23,7 +23,7 @@ class VehicleItems extends Component {
           plan: "",
           leasePrice: null,
           quantity: null,
-          carImage: null,
+          carImage: "",
           file: null,
           imageName: "",
           image_preview: '',
@@ -202,12 +202,11 @@ class VehicleItems extends Component {
 
 addVehicle.propTypes = {
   addVehicle: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  security: state.security
+ 
 })
 export default connect(mapStateToProps, {addVehicle})(VehicleItems)

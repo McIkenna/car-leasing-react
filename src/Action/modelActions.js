@@ -41,7 +41,7 @@ export const getModel = (makeId, history) => async dispatch => {
 export const updateModel = (carModel, history) => async dispatch => {
     try {
         await axios.put(`http://localhost:8000/api/carMake/`, carModel)
-        history.push("/dashboard");
+        history.push("/");
         dispatch({
             type: GET_ERRORS,
             payload: {}

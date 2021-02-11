@@ -137,16 +137,13 @@ onChange(e){
   //let formErrors = { ...this.state.formErrors }
   const {formErrors} = this.state;
 
-  for(let i=0; i<name.length; i++){
     if(value.length > 0){
       this.setState({isError: false});
      console.log(name)
-    } 
+
   }
   
    
-  
-  
   
   switch (name) {
     case "firstName":
@@ -160,7 +157,7 @@ onChange(e){
       break;
       case "address":
       formErrors.address =
-      value.trim().length < 10 ? "minimum 3 characaters required" : "";
+      value.trim().length < 10 ? "minimum 10 characaters required" : "";
       break;
       case "creditScore":
         formErrors.creditScore = numRegex.test(value) && value.trim().length == 3 && value > 500
@@ -254,7 +251,7 @@ let isValid = false;
     render() {
 
       const { formErrors } = this.state;
-      const isEnabled = !formValid(this.state) || this.state.isError;
+      const isEnabled = !formValid(this.state) && this.state.isError;
       
         return (
             

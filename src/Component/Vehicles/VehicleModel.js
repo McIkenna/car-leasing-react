@@ -15,8 +15,8 @@ class VehicleModel extends Component {
 
     return (
       <div>
-        <Link to={`/Vehicles/${vehicle.makeId}/${vehicle.vehicleId}`} >
           <div className={classes.wrap}>
+          <Link to={`/Vehicles/${vehicle.makeId}/${vehicle.vehicleId}`}></Link>
             <div className={classes.tile}>
               <img src={vehicle.carImage} className={classes.card_img_top} alt="..." />
               <div className={classes.text}>
@@ -57,7 +57,7 @@ class VehicleModel extends Component {
               </div>
             </div>
           </div>
-        </Link>
+   
       </div>
 
     )

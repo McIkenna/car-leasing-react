@@ -24,7 +24,7 @@ class UpdateVehicle extends Component {
         plan: "",
         leasePrice: null,
         quantity: null,
-        carImage: null,
+        carImage: "",
         file: null,
         imageName: "",
         image_preview: '',

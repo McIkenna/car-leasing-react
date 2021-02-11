@@ -52,7 +52,7 @@ export const getVehicle = (makeId, vehicleId, history) => async dispatch => {
 export const updateVehicle = (makeId, vehicleId, vehicle, history) => async dispatch => {
   try {
     await axios.put(`http://localhost:8000/api/vehicle/${makeId}/${vehicleId}`, vehicle)
-    history.push(`/Vehicles/${makeId}`)
+    history.push(`/Vehicles/${makeId}`);
     dispatch({
       type: GET_ERRORS,
       payload: {}
@@ -68,11 +68,11 @@ export const updateVehicle = (makeId, vehicleId, vehicle, history) => async disp
 
 export const deleteVehicle = (make_Id, vehicle_Id) => async dispatch => {
   if(window.confirm(`You are deleting a vehicle`)){
-    await axios.delete(`http://localhost:8000/api/vehicle/${make_Id}/${vehicle_Id}`);
+      await axios.delete(`http://localhost:8000/api/vehicle/${make_Id}/${vehicle_Id}`)
     dispatch({
       type: DELETE_VEHICLE,
       payload: vehicle_Id
-    })
+    });
   }
 }
 
