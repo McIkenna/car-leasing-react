@@ -14,7 +14,7 @@ class VehicleModel extends Component {
     const { vehicle } = this.props;
 
     return (
-      <div>
+      <div className={classes.content}>
           <div className={classes.wrap}>
           <Link to={`/Vehicles/${vehicle.makeId}/${vehicle.vehicleId}`}></Link>
             <div className={classes.tile}>

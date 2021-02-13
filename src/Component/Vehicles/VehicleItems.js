@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import {addVehicle} from "../../Action/vehicleActions";
 import PropTypes from "prop-types";
+import classes from "./Vehicles.module.css"
+
+import {getModel} from "../../Action/modelActions"
 
 class VehicleItems extends Component {
         constructor(props){
@@ -11,6 +14,7 @@ class VehicleItems extends Component {
       
           this.state = {
           makeId: id,
+          make: "",
           model: "",
           style: "",
           year: "",
@@ -39,11 +43,14 @@ class VehicleItems extends Component {
       }
       else return null;
   }
+  
 
  componentDidUpdate(prevProps, prevState){
       if(prevProps.error){
           this.setState({errors: prevProps.errors});
+          
       }
+    
   }
 
   onChange(e){
@@ -80,21 +87,13 @@ class VehicleItems extends Component {
 
 
     render() {
+      
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
+                <img src={this.state.image_preview} className={classes.form_img_preview} alt="..."/>
                   <div className="form-row">
-                  <div className="form-group col-md-3">
-      <label>Make ID</label>
-      <input 
-      type="text" 
-      className="form-control" 
-      name="makeId"
-      value={this.state.makeId} 
-      disabled
-      />
-    </div>
-    <div className="form-group col-md-3">
+                    <div className="form-group col-md-6">
       <label>Model</label>
       <input 
       type="text" 
@@ -104,7 +103,7 @@ class VehicleItems extends Component {
       onChange={this.onChange}/>
       
     </div>
-    <div className="form-group col-md-3">
+    <div className="form-group col-md-6">
       <label>Style</label>
       <select type="text" 
       className="form-control"
@@ -116,9 +115,6 @@ class VehicleItems extends Component {
       <option value="TRUCK">TRUCK</option>
     </select>
     </div>
-  </div>
-
-  <div className="form-row">
     <div className="form-group col-md-6">
       <label>Year</label>
       <input 
@@ -137,8 +133,6 @@ class VehicleItems extends Component {
       value={this.state.trimLevel}
       onChange = {this.onChange}  />
     </div>
-  </div>
-  <div className="form-row">
     <div className="form-group col-md-6">
       <label>Color</label>
       <input type="text" 
@@ -158,6 +152,9 @@ class VehicleItems extends Component {
       />
     </div>
   </div>
+
+
+
   <div className="form-row">
     <div className="form-group col-md-6">
       <label>Registeration Number</label>
@@ -180,7 +177,7 @@ class VehicleItems extends Component {
        />
     </div>
   </div>
-<img src={this.state.image_preview} alt="..."/>
+
 
   <div className="custom-file">
             <input 
@@ -201,11 +198,13 @@ class VehicleItems extends Component {
 }
 
 addVehicle.propTypes = {
+
   addVehicle: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
+
   errors: state.errors,
  
 })

@@ -13,7 +13,7 @@ import store from "./Store/store"
 import UpdateModel from './Component/Models/UpdateModel';
 import UpdateVehicle from './Component/Vehicles/UpdateVehicle';
 import SelectVehicle from './Component/Vehicles/SelectVehicle';
-
+import Footer from "./Component/Footer/Footer"
 
 
 const jwtToken = localStorage.jwtToken
@@ -38,6 +38,7 @@ function App() {
      <Route exact path="/UpdateModel/:id" component={UpdateModel}/>
      <Route exact path="/UpdateVehicle/:makeId/:vehicleId" component={UpdateVehicle}/>
      </Switch>
+     <Footer />
     </div>
     </Router>
     </Provider>

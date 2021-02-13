@@ -38,16 +38,20 @@ a {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 0 10%;
-
-  border-top: 0.3125rem solid #1c2127;
 }
-
 .card_img_top {
-  height: 300px;
+  height: 100%;
   width: 100%;
   overflow: hidden;
 }
 
+@media only screen and (max-width: 1300px) {
+  .vehicle {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 50%;
+  }
+}
 /*SELECT VEHICLE */
 
 * {
@@ -61,7 +65,7 @@ a {
   text-decoration: none;
 }
 .product_card {
-  width: 600px;
+  width: 40%;
   position: relative;
   box-shadow: 0 2px 7px #dfdfdf;
   margin: 50px auto;
@@ -159,22 +163,26 @@ a {
 }
 
 /*Card*/
+.content {
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding: 0.5rem;
+}
 .wrap {
-  margin: 50px auto 0 auto;
   width: 100%;
   display: flex;
   align-items: space-around;
-  max-width: 1200px;
 }
 .tile {
-  width: 640px;
-  height: 420px;
-  margin: 10px;
+  width: 500px;
+  height: 350px;
+  margin: 5% 0;
   background-color: #99aeff;
   display: inline-block;
   background-size: cover;
   position: relative;
-  cursor: pointer;
   transition: all 0.4s ease-out;
   box-shadow: 0px 35px 77px -17px rgba(0, 0, 0, 0.44);
   overflow: hidden;
@@ -193,8 +201,8 @@ a {
 .tile .text {
   /*   z-index:99; */
   position: absolute;
-  padding: 5% 10%;
-  height: calc(100% - 60px);
+  padding: 5%;
+  height: calc(100% - 40px);
 }
 .tile h1 {
   font-weight: 300;
@@ -269,13 +277,6 @@ a {
 }
 .dots span:nth-child(3) {
   transition-delay: 0.15s;
-}
-
-@media (max-width: 1000px) {
-  .wrap {
-    flex-direction: column;
-    width: 400px;
-  }
 }
 
 /*FORM */
@@ -421,4 +422,13 @@ a {
     width: 0;
     background: transparent;
   }
+}
+
+/*Form */
+.form_img_preview {
+  width: 50%;
+}
+
+.form_img_preview1 {
+  width: 40%;
 }

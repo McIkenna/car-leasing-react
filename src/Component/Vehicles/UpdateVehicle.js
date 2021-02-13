@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {getVehicle, updateVehicle} from "../../Action/vehicleActions"
 import PropTypes from "prop-types"
+import classes from "./Vehicles.module.css"
 
 class UpdateVehicle extends Component {
 
@@ -130,8 +131,8 @@ onChange(e){
                 <Link to={`/Vehicles/${this.state.makeId}`} type="button" class="btn btn-outline-dark">Go Back</Link>
 
                 <form onSubmit={this.onSubmit}>
-                <img src={this.state.carImage} alt="..."/>
-                <img src={this.state.image_preview} alt="..."/>
+                <img src={this.state.carImage} className={classes.form_img_preview1}/>
+                <img src={this.state.image_preview} className={classes.form_img_preview1}/>
                 <div className="form-row">
             <div className="form-group col-md-3">
             <label>Make</label>

@@ -4,6 +4,7 @@ import {connect} from "react-redux"
 import {getModels} from "../Action/modelActions"
 import PropTypes from "prop-types"
 import classes from "./Dashboard.module.css"
+import CreateModel from './Models/CreateModel'
 
 class Dashboard extends Component {
 
@@ -16,8 +17,11 @@ class Dashboard extends Component {
 
     
         return (
+            <div>
+                <CreateModel />
         <div className={classes.model}>
         {models.map(model => (<Models key={model.makeId} model={model}/>))}
+            </div>
             </div>
         )
     }

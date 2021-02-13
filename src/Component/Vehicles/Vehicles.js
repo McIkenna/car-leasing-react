@@ -68,11 +68,14 @@ componentDidUpdate(prevProps, prevState){
         else{
          
             return(
+              <div>
+              <Link to={`/`} type="button" class="btn btn-outline-dark">Go Back</Link>
               <div className={styles.vehicle}>
                  {vehicles.map(vehicle => (
                   <VehicleModel key={vehicle.makeId} vehicle={vehicle} />
                 ))}
                
+              </div>
               </div>
             )
           }

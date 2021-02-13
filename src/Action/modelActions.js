@@ -4,7 +4,7 @@ import {GET_MODELS, GET_ERRORS, GET_MODEL, DELETE_MODEL} from "./types";
 export const createModel = (carModel, history) => async dispatch => {
     try {
         await axios.post(`http://localhost:8000/api/carMake`, carModel)
-        history.push("/dashboard");
+        history.push("/");
         dispatch({
             type: GET_ERRORS,
             payload: {}

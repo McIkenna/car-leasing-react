@@ -7,6 +7,7 @@ import {deleteModel} from "../../Action/modelActions"
 import styles from "./Models.module.css"
 
 
+
  class Models extends Component {
 
   onDeleteModel = id => {
@@ -15,6 +16,7 @@ import styles from "./Models.module.css"
  
     render() {
         let {model} = this.props;
+        let {make} = this.props.model;
         const {makeId} = this.props.model;
        
     
@@ -32,7 +34,7 @@ import styles from "./Models.module.css"
         <Link to={`/Vehicles/${model.makeId}`} className={styles.news_card__read_more}>View</Link>
         <div className={styles.news_card__details_wrapper}>
           <Link to={`/UpdateModel/${model.makeId}`} className={styles.news_card__read_more}>Update</Link>
-          <Link to={`/VehicleItems/${model.makeId}`}   className={styles.news_card__read_more}>Create New Models</Link>
+          <Link to={`/VehicleItems/${model.makeId}`}   className={styles.news_card__read_more} >Create New Models</Link>
           <li type="button" className={styles.news_card__read_more} onClick={this.onDeleteModel.bind(this, model.makeId)}>Delete</li>
           </div>
         </div>

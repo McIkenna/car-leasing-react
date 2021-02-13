@@ -1,0 +1,10 @@
+.footer_top {
+  border-top: 0.3125rem solid rgb(9, 49, 68);
+  background-color: #03324d;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  color: aliceblue;
+  text-align: center;
+
+  bottom: 0;
+}

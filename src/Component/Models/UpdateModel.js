@@ -3,17 +3,23 @@ import {getModel,updateModel} from "../../Action/modelActions"
 import {Link} from "react-router-dom"
 import PropTypes from "prop-types"
 import {connect} from "react-redux"
+import classes from "./Models.module.css"
+import dummyImg from "../Images/defaultImg.jpg" 
+
+
 
 
 class UpdateModel extends Component {
+    
     constructor(){
+
         super()
         this.state = {
             makeId: "",
             make: "",
             carImageUrl : "",
             file: null,
-            image_preview: '',
+            image_preview: "",
             fileName:"",
             errors: {}
         }
@@ -79,16 +85,19 @@ componentWillReceiveProps(nextProps){
         updatedFormData.append('make', this.state.make);
       this.props.updateModel(updatedFormData, this.props.history)
     }
+
+    
     render() {
         const {errors} = this.state;
-        return (
-            <div>
+               return (
+            <div className={classes.container}>
                 <div>
                 <Link to={`/`} type="button" class="btn btn-outline-dark">Go Back</Link>
                 <form onSubmit={this.onSubmit}>
                     <div><h1>Update Model</h1></div>
-                <img src={this.state.carImageUrl} alt="..."/>
-                <img src={this.state.image_preview} alt="..."/>
+                <img src={this.state.carImageUrl} className={classes.form_img_preview1}/>
+                
+                <img src={this.state.image_preview} className={classes.form_img_preview2}/>
              
             <div className="form-group">
                 <label for="inputAddress">Make</label>

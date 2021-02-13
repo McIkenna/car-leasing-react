@@ -9,6 +9,7 @@ import LeaseCal from '../Orders/LeaseCal'
 import validator from 'react-validation';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
+import {Link} from "react-router-dom"
 
 
 const formValid = ({ formErrors, ...rest }) => {
@@ -186,7 +187,7 @@ onChange(e){
           [e.target.name] : e.target.value
       })*/
 
-      this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+      this.setState({ formErrors, [name]: value });
   }
 /*
   handleImagePreview = (e) => {
@@ -254,7 +255,8 @@ let isValid = false;
       const isEnabled = !formValid(this.state) && this.state.isError;
       
         return (
-            
+          <div>
+          <Link to={`/Vehicles/${this.state.makeId}`} type="button" className="btn btn-outline-dark">Go Back</Link>
     <div>
         <Modal show={this.state.viewAble} modalClosed={this.closeViewPrice}>
             <LeaseCal 
@@ -270,7 +272,7 @@ let isValid = false;
         </Modal>
        
   <div className={classes.product_card}>
-  <div className={classes.badge}>New</div>
+  <div className={classes.badge}>Latest</div>
   <div className={classes.product_tumb}>
     <img src={this.state.carImage} alt=""/>
   </div>
@@ -405,7 +407,7 @@ let isValid = false;
   </form>
 </div>
 </div>
-            
+</div>   
             
         )
     }
